@@ -7,25 +7,29 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.myappweather.databinding.FragmentMainBinding
+import com.example.myappweather.databinding.FragmentWeatherListBinding
 import com.example.myappweather.viewmodel.AppState
 import com.example.myappweather.viewmodel.MainViewModel
 import com.google.android.material.snackbar.Snackbar
 
 
-class MainFragment : Fragment() {
+class WeatherListFragment : Fragment() {
     private val viewModel: MainViewModel by lazy {
         ViewModelProvider(this)
             .get(MainViewModel::class.java)
     }
 
-    lateinit var binding: FragmentMainBinding
+    private var _binding: FragmentWeatherListBinding? = null
+    private val binding: FragmentWeatherListBinding
+        get() {
+            return _binding!!
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentMainBinding.inflate(inflater, container, false)
+        _binding = FragmentWeatherListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -37,18 +41,18 @@ class MainFragment : Fragment() {
             }
         }
         viewModel.getData().observe(viewLifecycleOwner, observer)
-        viewModel.getWeather()
+        //viewModel.getWeather()
     }
 
-    private fun renderData(data: AppState) {
+    fun renderData(data: AppState) {
         when (data) {
             is AppState.Error -> {
                 binding.loadingLayout.visibility = View.GONE
                 Snackbar.make(
-                    binding.mainView,
+                    binding.root,
                     "Не получилось ${data.error}", Snackbar.LENGTH_LONG
                 )
-                    .setAction("Повторить") { viewModel.getWeather() }
+                    //.setAction("Повторить") { viewModel.getWeather() }
                     .show()
             }
             is AppState.Loading -> {
@@ -56,12 +60,12 @@ class MainFragment : Fragment() {
             }
             is AppState.Success -> {
                 binding.loadingLayout.visibility = View.GONE
-                binding.cityName.text = data.weatherData.city.name
+                /*binding.cityName.text = data.weatherData.city.name
                 binding.temperatureValue.text = data.weatherData.temperature.toString()
                 binding.feelsLikeValue.text = data.weatherData.feelsLike.toString()
                 binding.cityCoordinates.text =
                     "${data.weatherData.city.lat} ${data.weatherData.city.lon}"
-                Snackbar.make(binding.mainView, "Получилось", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(binding.mainView, "Получилось", Snackbar.LENGTH_LONG).show()*/
             }
         }
     }
@@ -69,6 +73,6 @@ class MainFragment : Fragment() {
     companion object {
 
         @JvmStatic
-        fun newInstance() = MainFragment()
+        fun newInstance() = WeatherListFragment()
     }
 }
