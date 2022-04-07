@@ -3,7 +3,7 @@ package com.example.myappweather.view
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myappweather.R
-import com.example.myappweather.view.main.WeatherListFragment
+import com.example.myappweather.view.weatherlist.WeatherListFragment
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
