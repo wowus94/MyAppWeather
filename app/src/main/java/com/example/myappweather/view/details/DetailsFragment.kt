@@ -11,6 +11,7 @@ import com.example.myappweather.repository.Weather
 import com.example.myappweather.utils.KEY_BUNDLE_WEATHER
 import com.example.myappweather.viewmodel.MainViewModel
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_details.*
 
 
 class DetailsFragment : Fragment() {
@@ -25,6 +26,11 @@ class DetailsFragment : Fragment() {
             return _binding!!
         }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,19 +42,27 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val weather: Weather = requireArguments().getParcelable<Weather>(KEY_BUNDLE_WEATHER)!!
-        renderData(weather)
+        arguments?.getParcelable<Weather>(KEY_BUNDLE_WEATHER)?.let {
+            renderData(it)
+        }
     }
 
     private fun renderData(weather: Weather) {
-        binding.loadingLayout.visibility = View.GONE
-        binding.cityName.text = weather.city.name
-        binding.temperatureValue.text = weather.temperature.toString()
-        binding.feelsLikeValue.text = weather.feelsLike.toString()
-        binding.cityCoordinates.text =
-            "${weather.city.lat} ${weather.city.lon}"
-        Snackbar.make(binding.mainView, "Получилось", Snackbar.LENGTH_LONG).show()
+        with(binding) {
+            with(weather) { // TODO в правильности такого решения не уверен.
+                loadingLayout.visibility = View.GONE
+                cityName.text = city.name
+                temperatureValue.text = temperature.toString()
+                feelsLikeValue.text = feelsLike.toString()
+                cityCoordinates.text =
+                    "${city.lat} ${city.lon}"
+                showSnackBar()
+            }
+        }
     }
+
+    private fun showSnackBar() = //TODO как в методичке не получилось. Так работает.
+        Snackbar.make(mainView, "Получилось", Snackbar.LENGTH_LONG).show()
 
 
     companion object {

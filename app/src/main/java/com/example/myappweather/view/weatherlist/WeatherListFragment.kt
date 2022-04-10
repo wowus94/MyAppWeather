@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myappweather.R
 import com.example.myappweather.databinding.FragmentWeatherListBinding
 import com.example.myappweather.repository.Weather
@@ -31,7 +31,7 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
             return _binding!!
         }
 
-    val adapter = WeatherListAdapter(this)
+    private val adapter = WeatherListAdapter(this)
 
     override fun onDestroy() {
         super.onDestroy()
@@ -50,32 +50,39 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.recyclerView.adapter = adapter
-
-        val viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        val observer = object : Observer<AppState> {
-            override fun onChanged(data: AppState) {
-                renderData(data)
-            }
-        }
+        val observer = { data: AppState -> renderData(data) }
         viewModel.getData().observe(viewLifecycleOwner, observer)
+        viewModel.getWeatherRussia()
+        setupFab()
+        initRecycler()
+    }
 
-        binding.floatingActionButton.setOnClickListener {
-            isRussia = !isRussia
-            if (isRussia) {
-                viewModel.getWeatherRussia()
-                binding.floatingActionButton.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        requireContext(),
-                        R.drawable.ic_russia
+
+    private fun initRecycler() { //TODO
+        binding.recyclerView.also {
+            it.adapter = adapter
+            it.layoutManager = LinearLayoutManager(requireContext())
+        }
+    }
+
+    private fun setupFab() {
+        with(binding) {
+            floatingActionButton.setOnClickListener {
+                isRussia = !isRussia
+                if (isRussia) {
+                    viewModel.getWeatherRussia()
+                    floatingActionButton.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            requireContext(),
+                            R.drawable.ic_russia
+                        )
                     )
-                )
-            } else {
-                viewModel.getWeatherWorld()
-                binding.floatingActionButton.setImageDrawable(
-                    ContextCompat.getDrawable(requireContext(), R.drawable.ic_earth)
-                )
+                } else {
+                    viewModel.getWeatherWorld()
+                    floatingActionButton.setImageDrawable(
+                        ContextCompat.getDrawable(requireContext(), R.drawable.ic_earth)
+                    )
+                }
             }
         }
         viewModel.getWeatherRussia()
@@ -106,12 +113,19 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
 
         @JvmStatic
         fun newInstance() = WeatherListFragment()
+
     }
 
     override fun onItemClick(weather: Weather) {
-        val bundle = Bundle()
-        bundle.putParcelable(KEY_BUNDLE_WEATHER, weather)
         requireActivity().supportFragmentManager.beginTransaction()
-            .add(R.id.container, DetailsFragment.newInstance(bundle)).addToBackStack("").commit()
+            .add(
+                R.id.container,
+                DetailsFragment.newInstance(Bundle().apply {
+                    putParcelable(
+                        KEY_BUNDLE_WEATHER,
+                        weather
+                    )
+                })
+            ).addToBackStack("").commit()
     }
 }
