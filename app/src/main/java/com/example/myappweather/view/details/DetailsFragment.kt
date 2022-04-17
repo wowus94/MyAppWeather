@@ -7,14 +7,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.myappweather.databinding.FragmentDetailsBinding
+import com.example.myappweather.repository.OnServerResponse
 import com.example.myappweather.repository.Weather
+import com.example.myappweather.repository.WeatherLoader
+import com.example.myappweather.repository.dto.WeatherDTO
 import com.example.myappweather.utils.KEY_BUNDLE_WEATHER
 import com.example.myappweather.viewmodel.MainViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_details.*
 
 
-class DetailsFragment : Fragment() {
+class DetailsFragment : Fragment(), OnServerResponse {
     private val viewModel: MainViewModel by lazy {
         ViewModelProvider(this)
             .get(MainViewModel::class.java)
@@ -39,23 +42,24 @@ class DetailsFragment : Fragment() {
         return binding.root
     }
 
-
+    lateinit var currentCityName: String
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.getParcelable<Weather>(KEY_BUNDLE_WEATHER)?.let {
-            renderData(it)
+            currentCityName = it.city.name
+            WeatherLoader(this@DetailsFragment).loaderWeather(it.city.lat, it.city.lon)
         }
     }
 
-    private fun renderData(weather: Weather) {
+    private fun renderData(weather: WeatherDTO) {
         with(binding) {
             with(weather) { // TODO в правильности такого решения не уверен.
                 loadingLayout.visibility = View.GONE
-                cityName.text = city.name
-                temperatureValue.text = temperature.toString()
-                feelsLikeValue.text = feelsLike.toString()
+                cityName.text = currentCityName
+                temperatureValue.text = factDTO.temperature.toString()
+                feelsLikeValue.text = factDTO.feelsLike.toString()
                 cityCoordinates.text =
-                    "${city.lat} ${city.lon}"
+                    "${weather.infoDTO.lat} ${weather.infoDTO.lon}"
                 showSnackBar()
             }
         }
@@ -73,5 +77,9 @@ class DetailsFragment : Fragment() {
             fragment.arguments = bundle
             return fragment
         }
+    }
+
+    override fun onResponse(weatherDTO: WeatherDTO) {
+        renderData(weatherDTO)
     }
 }
