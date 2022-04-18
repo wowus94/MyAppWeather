@@ -11,22 +11,34 @@ import java.net.URL
 
 class WeatherLoader(private val onServerResponseListener: OnServerResponse) {
     fun loaderWeather(lat: Double, lon: Double) {
+
+        val urlText = "https://api.weather.yandex.ru/v2/informers?lat=$lat&lon=$lon"
+        val url = URL(urlText)
+        val urlConnection: HttpURLConnection =
+            (url.openConnection() as HttpURLConnection).apply {
+                connectTimeout = 1000
+                readTimeout = 1000
+                addRequestProperty("X-Yandex-API-Key", "478129da-0644-4cec-997e-132cb5f4b942")
+            }
+
         Thread {
-            val urlText = "https://api.weather.yandex.ru/v2/informers?lat=$lat&lon=$lon"
-            val url = URL(urlText)
-            val urlConnection: HttpURLConnection =
-                (url.openConnection() as HttpURLConnection).apply {
-                    connectTimeout = 1000
-                    readTimeout = 1000
-                    addRequestProperty("X-Yandex-API-Key", "478129da-0644-4cec-997e-132cb5f4b942")
+            try {
+
+                val headers = urlConnection.headerFields
+                val responseCode = urlConnection.responseCode
+                val buffer = BufferedReader(InputStreamReader(urlConnection.inputStream))
+
+                val weatherDTO: WeatherDTO = Gson().fromJson(buffer, WeatherDTO::class.java)
+                Handler(Looper.getMainLooper()).post {
+                    onServerResponseListener.onResponse(
+                        weatherDTO
+                    )
                 }
-
-            val headers = urlConnection.headerFields
-            val responseCode = urlConnection.responseCode
-            val buffer = BufferedReader(InputStreamReader(urlConnection.inputStream))
-
-            val weatherDTO: WeatherDTO = Gson().fromJson(buffer, WeatherDTO::class.java)
-            Handler(Looper.getMainLooper()).post {onServerResponseListener.onResponse(weatherDTO)}
+            } catch (e: Exception) {
+                //TODO HW "что-то пошло не так" Snackbar
+            } finally {
+                urlConnection.disconnect()
+            }
         }.start()
     }
 }
