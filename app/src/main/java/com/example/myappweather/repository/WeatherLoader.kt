@@ -2,6 +2,7 @@ package com.example.myappweather.repository
 
 import android.os.Handler
 import android.os.Looper
+import com.example.myappweather.BuildConfig
 import com.example.myappweather.repository.dto.WeatherDTO
 import com.google.gson.Gson
 import java.io.BufferedReader
@@ -18,7 +19,7 @@ class WeatherLoader(private val onServerResponseListener: OnServerResponse) {
             (url.openConnection() as HttpURLConnection).apply {
                 connectTimeout = 1000
                 readTimeout = 1000
-                addRequestProperty("X-Yandex-API-Key", "478129da-0644-4cec-997e-132cb5f4b942")
+                addRequestProperty("X-Yandex-API-Key", BuildConfig.WEATHER_API_KEY)
             }
 
         Thread {
