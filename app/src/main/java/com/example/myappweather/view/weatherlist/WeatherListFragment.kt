@@ -92,12 +92,10 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
         when (data) {
             is AppState.Error -> {
                 binding.loadingLayout.visibility = View.GONE
-                Snackbar.make(
-                    binding.root,
-                    "Не получилось ${data.error}", Snackbar.LENGTH_LONG
-                )
-                    .setAction("Повторить") { viewModel.getWeatherRussia() }
-                    .show()
+                binding.loadingLayout.withAction(getString(R.string.error),
+                    getString(R.string.reload),
+                    { viewModel.getWeatherRussia() },
+                    Snackbar.LENGTH_LONG)
             }
             is AppState.Loading -> {
                 binding.loadingLayout.visibility = View.VISIBLE
@@ -108,6 +106,16 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
             }
         }
     }
+
+    private fun View.withAction(
+        text: String,
+        actionText: String,
+        action: (View) -> Unit,
+        length: Int = Snackbar.LENGTH_INDEFINITE
+    ) {
+        Snackbar.make(this, text, length).setAction(actionText, action).show()
+    }
+
 
     companion object {
 
