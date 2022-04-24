@@ -7,4 +7,8 @@
     <string name="city_coordinates">lt/ln: %s, %s"</string>
     <string name="error">Error</string>
     <string name="reload">Reload</string>
+    <string name="threads">Threads</string>
+    <string name="calculate">calculate</string>
+    <string name="default_num">0</string>
+    <string name="hint">Введите кол-во сек.</string>
 </resources>

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.myappweather.R
 import com.example.myappweather.databinding.FragmentDetailsBinding
 import com.example.myappweather.repository.OnServerResponse
 import com.example.myappweather.repository.Weather
@@ -60,6 +61,7 @@ class DetailsFragment : Fragment(), OnServerResponse {
                 feelsLikeValue.text = factDTO.feelsLike.toString()
                 cityCoordinates.text =
                     "${weather.infoDTO.lat} ${weather.infoDTO.lon}"
+
                 showSnackBar()
             }
         }
@@ -67,8 +69,6 @@ class DetailsFragment : Fragment(), OnServerResponse {
 
     private fun showSnackBar() = //TODO как в методичке не получилось. Так работает.
         Snackbar.make(mainView, "Получилось", Snackbar.LENGTH_LONG).show()
-
-
     companion object {
 
         @JvmStatic

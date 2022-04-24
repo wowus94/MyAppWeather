@@ -15,8 +15,9 @@ class WeatherListAdapter(
 
     fun setData(dataNew: List<Weather>) {
         this.data = dataNew
-        notifyDataSetChanged()
+        notifyItemRangeChanged(0,data.size)
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CityHolder {
         val binding = FragmentWeatherListRecyclerItemBinding.inflate(
@@ -28,7 +29,7 @@ class WeatherListAdapter(
     }
 
     override fun onBindViewHolder(holder: CityHolder, position: Int) {
-        holder.bind(data.get(position))
+        holder.bind(data[position])
     }
 
     override fun getItemCount() = data.size
