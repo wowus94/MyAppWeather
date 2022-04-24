@@ -8,7 +8,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myappweather.R
 import com.example.myappweather.utils.KEY_BUNDLE_WEATHER_ONE
-import com.example.myappweather.utils.KEY_MY_ACTION
+import com.example.myappweather.utils.KEY_WAVE_MY_ACTION
 import com.example.myappweather.view.experiments.MainService
 import com.example.myappweather.view.experiments.MyBroadcastReceiver
 import com.example.myappweather.view.experiments.ThreadsFragment
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         })
 
         val receiver = MyBroadcastReceiver()
-        registerReceiver(receiver, IntentFilter(KEY_MY_ACTION))
+        registerReceiver(receiver, IntentFilter(KEY_WAVE_MY_ACTION))
         //LocalBroadcastManager.getInstance(this).registerReceiver()
     }
 

@@ -14,7 +14,7 @@ class MainService(val name: String = "") : IntentService(name) {
             val extra = it.getStringExtra(KEY_BUNDLE_WEATHER_ONE)
             Log.d("@@@", "work MainService $extra")
             sleep(1000L)
-            val message = Intent(KEY_MY_ACTION)
+            val message = Intent(KEY_WAVE_MY_ACTION)
             message.putExtra(KEY_BUNDLE_WEATHER_TWO, "Привет, активити и тебе всего хорошего")
             sendBroadcast(message)
         }
