@@ -9,6 +9,7 @@
     <string name="reload">Reload</string>
     <string name="threads">Threads</string>
     <string name="calculate">calculate</string>
-    <string name="default_num">0</string>
+    <string name="calculate_two">calculate</string>
+    <string name="default_num">1</string>
     <string name="hint">Введите кол-во сек.</string>
 </resources>

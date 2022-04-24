@@ -2,6 +2,7 @@
 <resources>
     <dimen name="city_name_margin_top">50dp</dimen>
     <dimen name="margin_15_dp">15dp</dimen>
+    <dimen name="margin_30_dp">30dp</dimen>
     <dimen name="temperature_value_text_size">40sp</dimen>
     <dimen name="feels_like_text_size">25sp</dimen>
     <dimen name="btn_text_size">15sp</dimen>
