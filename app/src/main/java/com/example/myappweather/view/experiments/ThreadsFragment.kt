@@ -1,4 +1,4 @@
-package com.example.myappweather.view.threads
+package com.example.myappweather.view.experiments
 
 import android.os.Bundle
 import android.os.Handler

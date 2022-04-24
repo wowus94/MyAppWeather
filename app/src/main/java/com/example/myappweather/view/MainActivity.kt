@@ -1,11 +1,13 @@
 package com.example.myappweather.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myappweather.R
-import com.example.myappweather.view.threads.ThreadsFragment
+import com.example.myappweather.view.experiments.MainService
+import com.example.myappweather.view.experiments.ThreadsFragment
 import com.example.myappweather.view.weatherlist.WeatherListFragment
 
 class MainActivity : AppCompatActivity() {
@@ -17,6 +19,9 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container, WeatherListFragment.newInstance()).commit()
         }
+
+        startService(Intent(this, MainService::class.java))
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
