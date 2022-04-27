@@ -15,8 +15,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 class DetailsService(val name: String = "") : IntentService(name) {
-    override fun onHandleIntent(intent: Intent?)
-    {
+    override fun onHandleIntent(intent: Intent?) {
         Log.d("@@@", "work MainService")
         intent?.let {
             val lat = it.getDoubleExtra(KEY_BUNDLE_LAT, 0.0)
@@ -30,12 +29,6 @@ class DetailsService(val name: String = "") : IntentService(name) {
                     readTimeout = 1000
                     addRequestProperty(YANDEX_API_KEY, BuildConfig.WEATHER_API_KEY)
                 }
-
-            val headers = urlConnection.headerFields
-            val responseCode = urlConnection.responseCode
-            val buffer = BufferedReader(InputStreamReader(urlConnection.inputStream))
-
-            val weatherDTO: WeatherDTO = Gson().fromJson(buffer, WeatherDTO::class.java)
 
             try {
                 Thread.sleep(500)
@@ -52,8 +45,6 @@ class DetailsService(val name: String = "") : IntentService(name) {
                     in clientside -> {
                     }
                     in responseOk -> {
-                        val buffer = BufferedReader(InputStreamReader(urlConnection.inputStream))
-                        val weatherDTO: WeatherDTO = Gson().fromJson(buffer, WeatherDTO::class.java)
                     }
                 }
 
@@ -62,6 +53,9 @@ class DetailsService(val name: String = "") : IntentService(name) {
             } finally {
                 urlConnection.disconnect()
             }
+
+            val buffer = BufferedReader(InputStreamReader(urlConnection.inputStream))
+            val weatherDTO: WeatherDTO = Gson().fromJson(buffer, WeatherDTO::class.java)
 
             val message = Intent(KEY_WAVE_MY_ACTION)
             message.putExtra(
