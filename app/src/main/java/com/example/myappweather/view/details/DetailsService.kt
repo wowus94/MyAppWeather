@@ -22,7 +22,7 @@ class DetailsService(val name: String = "") : IntentService(name) {
             val lat = it.getDoubleExtra(KEY_BUNDLE_LAT, 0.0)
             val lon = it.getDoubleExtra(KEY_BUNDLE_LON, 0.0)
             Log.d("@@@", "work $lat $lon")
-            val urlText = "$YANDEX_DOMAIN${YANDEX_PATH}lat=$lat&lon=$lon"
+            val urlText = "$YANDEX_DOMAIN${YANDEX_ENDPOINT}lat=$lat&lon=$lon"
             val url = URL(urlText)
             val urlConnection: HttpURLConnection =
                 (url.openConnection() as HttpURLConnection).apply {
@@ -53,7 +53,6 @@ class DetailsService(val name: String = "") : IntentService(name) {
                     }
                     in responseOk -> {
                         val buffer = BufferedReader(InputStreamReader(urlConnection.inputStream))
-                        //val result = (buffer)
                         val weatherDTO: WeatherDTO = Gson().fromJson(buffer, WeatherDTO::class.java)
                     }
                 }

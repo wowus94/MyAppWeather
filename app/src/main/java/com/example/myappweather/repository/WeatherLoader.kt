@@ -6,7 +6,7 @@ import com.example.myappweather.BuildConfig
 import com.example.myappweather.repository.dto.WeatherDTO
 import com.example.myappweather.utils.YANDEX_API_KEY
 import com.example.myappweather.utils.YANDEX_DOMAIN
-import com.example.myappweather.utils.YANDEX_PATH
+import com.example.myappweather.utils.YANDEX_ENDPOINT
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import java.io.BufferedReader
@@ -17,7 +17,7 @@ import java.net.URL
 class WeatherLoader( private val onServerResponseListener: OnServerResponse) {
     fun loaderWeather(lat: Double, lon: Double) {
 
-        val urlText = "$YANDEX_DOMAIN${YANDEX_PATH}lat=$lat&lon=$lon"
+        val urlText = "$YANDEX_DOMAIN${YANDEX_ENDPOINT}lat=$lat&lon=$lon"
         val uri = URL(urlText)
 
         Thread {
