@@ -47,9 +47,17 @@ class DetailsService(val name: String = "") : IntentService(name) {
                     in responseOk -> {
                     }
                 }
+                val buffer = BufferedReader(InputStreamReader(urlConnection.inputStream))
+                val weatherDTO: WeatherDTO = Gson().fromJson(buffer, WeatherDTO::class.java)
+
+                val message = Intent(KEY_WAVE_MY_ACTION)
+                message.putExtra(
+                    KEY_BUNDLE_SERVICE_BROADCAST_WEATHER, weatherDTO
+                )
+                LocalBroadcastManager.getInstance(this).sendBroadcast(message)
 
             } catch (e: JsonSyntaxException) {
-
+                // TODO Добавить отправку сообщения с ошибкой осталось
             } finally {
                 urlConnection.disconnect()
             }
