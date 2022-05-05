@@ -4,9 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import coil.ImageLoader
+import coil.decode.SvgDecoder
+import coil.load
+import coil.request.ImageRequest
 import com.example.myappweather.databinding.FragmentDetailsBinding
 import com.example.myappweather.repository.Weather
 import com.example.myappweather.utils.KEY_BUNDLE_WEATHER
@@ -70,12 +75,39 @@ class DetailsFragment : Fragment() {
                     temperatureValue.text = weather.temperature.toString()
                     feelsLikeValue.text = weather.feelsLike.toString()
                     cityCoordinates.text =
-                         "${weather.city.lat} ${weather.city.lon}"
+                        "${weather.city.lat} ${weather.city.lon}"
                     Snackbar.make(mainView, "Получилось", Snackbar.LENGTH_LONG)
                         .show()
+
+                    /*Glide.with(requireContext())
+                        .load("https://freepngimg.com/thumb/city/36284-8-city-transparent-image.png")
+                        .into(headerCityIcon)*/
+
+                    /*Picasso.get()
+                        ?.load("https://freepngimg.com/thumb/city/36284-8-city-transparent-image.png")
+                        ?.into(headerCityIcon)*/
+
+                    headerCityIcon.load("https://freepngimg.com/thumb/city/36284-8-city-transparent-image.png")
+
+                    icon.loadSvg("https://yastatic.net/weather/i/icons/blueye/color/svg/${weather.icon}.svg")
+
+
                 }
             }
         }
+    }
+
+    fun ImageView.loadSvg(url: String) {
+        val imageLoader = ImageLoader.Builder(this.context)
+            .componentRegistry { add(SvgDecoder(this@loadSvg.context)) }
+            .build()
+        val request = ImageRequest.Builder(this.context)
+            .crossfade(true)
+            .crossfade(500)
+            .data(url)
+            .target(this)
+            .build()
+        imageLoader.enqueue(request)
     }
 
 

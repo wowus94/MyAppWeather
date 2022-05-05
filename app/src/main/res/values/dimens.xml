@@ -9,4 +9,6 @@
     <dimen name="margin_list">15dp</dimen>
     <dimen name="text_size_list">25sp</dimen>
     <dimen name="text_size">35sp</dimen>
+    <dimen name="height_img">70dp</dimen>
+    <dimen name="height_icon">150dp</dimen>
 </resources>
