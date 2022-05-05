@@ -1,4 +1,5 @@
 package com.example.myappweather.repository
+
 import com.example.myappweather.BuildConfig
 import com.example.myappweather.repository.dto.WeatherDTO
 import com.example.myappweather.utils.YANDEX_DOMAIN
@@ -25,10 +26,13 @@ class DetailsRepositoryRetrofit2Impl : DetailsRepository {
                         response.body()?.let {
                             callbackMy.onResponse(convertDtoToModel(it))
                         }
+                    } else {
+                        callbackMy.onFail()
                     }
                 }
 
                 override fun onFailure(call: Call<WeatherDTO>, t: Throwable) {
+                    callbackMy.onFail()
                     // TODO HW
                 }
             })

@@ -2,7 +2,10 @@ package com.example.myappweather.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.myappweather.repository.*
+import com.example.myappweather.repository.City
+import com.example.myappweather.repository.DetailsRepository
+import com.example.myappweather.repository.DetailsRepositoryRetrofit2Impl
+import com.example.myappweather.repository.Weather
 
 class DetailsViewModel(
     private val liveData: MutableLiveData<DetailsState> = MutableLiveData(),
@@ -17,11 +20,17 @@ class DetailsViewModel(
             override fun onResponse(weather: Weather) {
                 liveData.postValue(DetailsState.Success(weather))
             }
+
+            override fun onFail() {
+                //TODO HW   liveData.postValue(DetailsState.Error())
+            }
+
         })
     }
 
     interface Callback {
         fun onResponse(weather: Weather)
+        fun onFail()
         // TODO HW Fail
     }
 
