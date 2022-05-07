@@ -18,6 +18,8 @@ const val YANDEX_API_KEY = "X-Yandex-API-Key"
 const val KEY_BUNDLE_WEATHER = "weather"
 const val LAT = "lat"
 const val LON = "lon"
+const val KEY_SP_FILE_NAME_1 = "fileName1"
+const val KEY_SP_FILE_NAME_1_KEY_IS_RUSSIAN = "is_russian"
 
 
 fun convertDtoToModel(weatherDTO: WeatherDTO): Weather {

@@ -1,5 +1,6 @@
 package com.example.myappweather.view
 
+import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
@@ -8,6 +9,8 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myappweather.R
 import com.example.myappweather.utils.KEY_BUNDLE_WEATHER_ONE
+import com.example.myappweather.utils.KEY_SP_FILE_NAME_1
+import com.example.myappweather.utils.KEY_SP_FILE_NAME_1_KEY_IS_RUSSIAN
 import com.example.myappweather.utils.KEY_WAVE_MY_ACTION
 import com.example.myappweather.view.experiments.MainService
 import com.example.myappweather.view.experiments.MyBroadcastReceiver
@@ -30,7 +33,16 @@ class MainActivity : AppCompatActivity() {
 
         val receiver = MyBroadcastReceiver()
         registerReceiver(receiver, IntentFilter(KEY_WAVE_MY_ACTION))
-        //LocalBroadcastManager.getInstance(this).registerReceiver()
+
+
+        val sp = getSharedPreferences(KEY_SP_FILE_NAME_1, Context.MODE_PRIVATE)
+        val editor = sp.edit()
+        editor.putBoolean(KEY_SP_FILE_NAME_1_KEY_IS_RUSSIAN, true)
+        editor.apply()
+
+        val defaultValueIsRussian = true
+        sp.getBoolean(KEY_SP_FILE_NAME_1_KEY_IS_RUSSIAN, defaultValueIsRussian)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
