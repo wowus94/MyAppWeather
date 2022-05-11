@@ -8,7 +8,7 @@ import com.example.myappweather.domain.room.MyDB
 class MyApp : Application() {
     override fun onCreate() {
         super.onCreate()
-        appContext = null
+        appContext = this
     }
 
     companion object {
