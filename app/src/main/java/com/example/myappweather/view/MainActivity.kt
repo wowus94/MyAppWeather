@@ -16,6 +16,7 @@ import com.example.myappweather.utils.KEY_WAVE_MY_ACTION
 import com.example.myappweather.view.experiments.MainService
 import com.example.myappweather.view.experiments.MyBroadcastReceiver
 import com.example.myappweather.view.experiments.ThreadsFragment
+import com.example.myappweather.view.weatherlist.HistoryWeatherListFragment
 import com.example.myappweather.view.weatherlist.WeatherListFragment
 
 class MainActivity : AppCompatActivity() {
@@ -45,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         sp.getBoolean(KEY_SP_FILE_NAME_1_KEY_IS_RUSSIAN, defaultValueIsRussian)
 
 
-       MyApp.getHistoryDao().getAll()
+        MyApp.getHistoryDao().getAll()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -57,7 +58,14 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.action_threads -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, ThreadsFragment.newInstance()).commit()
+                    .replace(R.id.container, ThreadsFragment.newInstance()).addToBackStack("")
+                    .commit()
+            }
+
+            R.id.action_history -> {
+                supportFragmentManager.beginTransaction()
+                    .add(R.id.container, HistoryWeatherListFragment.newInstance())
+                    .addToBackStack("").commit()
             }
         }
         return super.onOptionsItemSelected(item)

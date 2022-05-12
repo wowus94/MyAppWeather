@@ -4,22 +4,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myappweather.databinding.FragmentWeatherListRecyclerItemBinding
+import com.example.myappweather.databinding.FragmentHistoryWeatherListBinding
+import com.example.myappweather.databinding.FragmentHistoryWeatherListRecyclerItemBinding
 import com.example.myappweather.repository.Weather
 
-class WeatherListAdapter(
-    private val onItemListClickListener: OnItemListClickListener,
+class HistoryWeatherListAdapter(
     private var data: List<Weather> = listOf()
 ) :
-    RecyclerView.Adapter<WeatherListAdapter.CityHolder>() {
+    RecyclerView.Adapter<HistoryWeatherListAdapter.CityHolder>() {
 
     fun setData(dataNew: List<Weather>) {
         this.data = dataNew
-        notifyDataSetChanged()
+        notifyItemRangeChanged(0, data.size)
     }
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CityHolder {
-        val binding = FragmentWeatherListRecyclerItemBinding.inflate(
+        val binding = FragmentHistoryWeatherListBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -28,18 +29,17 @@ class WeatherListAdapter(
     }
 
     override fun onBindViewHolder(holder: CityHolder, position: Int) {
-        holder.bind(data.get(position))
+        holder.bind(data[position])
     }
 
     override fun getItemCount() = data.size
 
     inner class CityHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(weather: Weather) {
-            FragmentWeatherListRecyclerItemBinding.bind(itemView).apply {
+            FragmentHistoryWeatherListRecyclerItemBinding.bind(itemView).apply {
                 tvCityName.text = weather.city.name
-                root.setOnClickListener {
-                    onItemListClickListener.onItemClick(weather)
-                }
+                tvTemperature.text = weather.temperature.toString()
+                tvFeelsLike.text = weather.feelsLike.toString()
             }
         }
     }

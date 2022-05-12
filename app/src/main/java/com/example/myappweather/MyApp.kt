@@ -18,7 +18,7 @@ class MyApp : Application() {
             if (db == null) {
                 if (appContext != null) {
                     db = Room.databaseBuilder(appContext!!, MyDB::class.java, "test")
-                        .allowMainThreadQueries()
+                        .allowMainThreadQueries() // TODO Неправильно
                         .build()
                 } else {
                     throw IllegalStateException("Пустой appContext")
