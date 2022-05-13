@@ -7,23 +7,21 @@ import com.example.myappweather.viewmodel.DetailsViewModel
 import com.example.myappweather.viewmodel.HistoryViewModel
 
 
-class DetailsRepositoryRoomImpl:DetailsRepositoryOne,DetailsRepositoryAll,DetailsRepositoryAdd {
+class DetailsRepositoryRoomImpl : DetailsRepositoryOne, DetailsRepositoryAll, DetailsRepositoryAdd {
     override fun getAllWeatherDetails(callback: HistoryViewModel.CallbackForAll) {
         callback.onResponse(convertHistoryEntityToWeather(MyApp.getHistoryDao().getAll()))
     }
 
     override fun getWeatherDetails(city: City, callback: DetailsViewModel.Callback) {
-        val list =convertHistoryEntityToWeather(MyApp.getHistoryDao().getHistoryForCity(city.name))
-        if(list.isEmpty()){
-            callback.onFail() // то и отобразить нечего
-        }else{
+        val list = convertHistoryEntityToWeather(MyApp.getHistoryDao().getHistoryForCity(city.name))
+        if (list.isEmpty()) {
+            callback.onFail()
+        } else {
             callback.onResponse(list.last()) // FIXME hack
         }
-
     }
 
     override fun addWeather(weather: Weather) {
         MyApp.getHistoryDao().insert(convertWeatherToEntity(weather))
     }
-
 }

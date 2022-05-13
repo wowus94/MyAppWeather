@@ -1,4 +1,4 @@
-package com.example.myappweather.view.weatherlist
+package com.example.myappweather.view.historylist
 
 import android.os.Bundle
 import android.view.LayoutInflater

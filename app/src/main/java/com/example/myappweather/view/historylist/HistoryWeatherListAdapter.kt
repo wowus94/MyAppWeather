@@ -1,10 +1,9 @@
-package com.example.myappweather.view.weatherlist
+package com.example.myappweather.view.historylist
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myappweather.databinding.FragmentHistoryWeatherListBinding
 import com.example.myappweather.databinding.FragmentHistoryWeatherListRecyclerItemBinding
 import com.example.myappweather.repository.Weather
 
@@ -20,7 +19,7 @@ class HistoryWeatherListAdapter(
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CityHolder {
-        val binding = FragmentHistoryWeatherListBinding.inflate(
+        val binding = FragmentHistoryWeatherListRecyclerItemBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false

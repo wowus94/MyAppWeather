@@ -16,7 +16,7 @@ import com.example.myappweather.utils.KEY_WAVE_MY_ACTION
 import com.example.myappweather.view.experiments.MainService
 import com.example.myappweather.view.experiments.MyBroadcastReceiver
 import com.example.myappweather.view.experiments.ThreadsFragment
-import com.example.myappweather.view.weatherlist.HistoryWeatherListFragment
+import com.example.myappweather.view.historylist.HistoryWeatherListFragment
 import com.example.myappweather.view.weatherlist.WeatherListFragment
 
 class MainActivity : AppCompatActivity() {
