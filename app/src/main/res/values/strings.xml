@@ -14,8 +14,8 @@
     <string name="hint">Введите кол-во сек.</string>
     <string name="history">History</string>
     <string name="action_work_with_content_provider">WWCP</string>
-    <string name="доступ_к_контактам">Доступ к контактам</string>
-    <string name="текст_объяснения">Объяснение</string>
-    <string name="предоставить_доступ">Предоставить доступ</string>
-    <string name="не_надо">Не надо</string>
+    <string name="access_contacts">Доступ к контактам</string>
+    <string name="text_message">Объяснение</string>
+    <string name="provide_access">Предоставить доступ</string>
+    <string name="no_need">Не надо</string>
 </resources>

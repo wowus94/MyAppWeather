@@ -1,15 +1,19 @@
 package com.example.myappweather.lesson9
 
 import android.Manifest
+import android.content.ContentResolver
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.myappweather.R
+
 import com.example.myappweather.databinding.FragmentWorkWithContentProviderBinding
 
 
@@ -39,7 +43,7 @@ class WorkWithContentProviderFragment : Fragment() {
         checkPermission()
     }
 
-   private fun checkPermission() {
+    private fun checkPermission() {
         if (ContextCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.READ_CONTACTS
@@ -55,17 +59,17 @@ class WorkWithContentProviderFragment : Fragment() {
 
     fun explain() {
         AlertDialog.Builder(requireContext())
-            .setTitle(getString(R.string.доступ_к_контактам))
-            .setMessage(getString(R.string.текст_объяснения))
-            .setPositiveButton(getString(R.string.предоставить_доступ)) { _, _ ->
+            .setTitle(getString(R.string.access_contacts))
+            .setMessage(getString(R.string.text_message))
+            .setPositiveButton(getString(R.string.provide_access)) { _, _ ->
                 mRequestPermission()
             }
-            .setNegativeButton(getString(R.string.не_надо)) { dialog, _ -> dialog.dismiss() }
+            .setNegativeButton(getString(R.string.no_need)) { dialog, _ -> dialog.dismiss() }
             .create()
             .show()
     }
 
-    val REQUEST_CODE = 999
+    private val REQUEST_CODE = 999
     private fun mRequestPermission() {
         requestPermissions(arrayOf(Manifest.permission.READ_CONTACTS), REQUEST_CODE)
     }
@@ -89,7 +93,29 @@ class WorkWithContentProviderFragment : Fragment() {
     }
 
     private fun getContacts() {
+        val contentResolver: ContentResolver = requireContext().contentResolver
+        val cursor = contentResolver.query(
+            ContactsContract.Contacts.CONTENT_URI,
+            null,
+            null,
+            null,
+            ContactsContract.Contacts.DISPLAY_NAME + "ASC"
+        )
+        cursor?.let {
+            for (i in 0 until it.count) {
+                if (cursor.moveToPosition(i)) {
+                    val columnNameIndex =
+                        cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)
+                    val name: String = cursor.getString(columnNameIndex)
+                    binding.containerForContacts.addView(TextView(requireContext()).apply {
+                        textSize = 30f
+                        text = name
+                    })
+                }
+            }
+        }
     }
+
 
     companion object {
 
