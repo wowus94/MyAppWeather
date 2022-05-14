@@ -13,7 +13,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.myappweather.R
-
 import com.example.myappweather.databinding.FragmentWorkWithContentProviderBinding
 
 
@@ -57,7 +56,7 @@ class WorkWithContentProviderFragment : Fragment() {
         }
     }
 
-    fun explain() {
+    private fun explain() {
         AlertDialog.Builder(requireContext())
             .setTitle(getString(R.string.access_contacts))
             .setMessage(getString(R.string.text_message))
@@ -69,7 +68,7 @@ class WorkWithContentProviderFragment : Fragment() {
             .show()
     }
 
-    private val REQUEST_CODE = 999
+    val REQUEST_CODE = 999
     private fun mRequestPermission() {
         requestPermissions(arrayOf(Manifest.permission.READ_CONTACTS), REQUEST_CODE)
     }
@@ -99,7 +98,7 @@ class WorkWithContentProviderFragment : Fragment() {
             null,
             null,
             null,
-            ContactsContract.Contacts.DISPLAY_NAME + "ASC"
+            ContactsContract.Contacts.DISPLAY_NAME + " ASC"
         )
         cursor?.let {
             for (i in 0 until it.count) {
@@ -116,11 +115,8 @@ class WorkWithContentProviderFragment : Fragment() {
         }
     }
 
-
     companion object {
-
         @JvmStatic
         fun newInstance() = WorkWithContentProviderFragment()
-
     }
 }
