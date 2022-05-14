@@ -12,5 +12,10 @@
     <string name="calculate_two">calculate</string>
     <string name="default_num">1</string>
     <string name="hint">Введите кол-во сек.</string>
-    <string name="history">history</string>
+    <string name="history">History</string>
+    <string name="action_work_with_content_provider">WWCP</string>
+    <string name="доступ_к_контактам">Доступ к контактам</string>
+    <string name="текст_объяснения">Объяснение</string>
+    <string name="предоставить_доступ">Предоставить доступ</string>
+    <string name="не_надо">Не надо</string>
 </resources>

@@ -23,7 +23,6 @@ const val LON = "lon"
 const val KEY_SP_FILE_NAME_1 = "fileName1"
 const val KEY_SP_FILE_NAME_1_KEY_IS_RUSSIAN = "is_russian"
 
-
 fun convertDtoToModel(weatherDTO: WeatherDTO): Weather {
     val fact: FactDTO = weatherDTO.factDTO
     return (Weather(getDefaultCity(), fact.temperature, fact.feelsLike, fact.icon))
