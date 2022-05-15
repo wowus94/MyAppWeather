@@ -9,6 +9,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myappweather.MyApp
 import com.example.myappweather.R
+import com.example.myappweather.lesson10.MapsFragment
 import com.example.myappweather.lesson9.WorkWithContentProviderFragment
 import com.example.myappweather.utils.KEY_BUNDLE_WEATHER_ONE
 import com.example.myappweather.utils.KEY_SP_FILE_NAME_1
@@ -72,6 +73,12 @@ class MainActivity : AppCompatActivity() {
             R.id.action_work_with_content_provider -> {
                 supportFragmentManager.beginTransaction()
                     .add(R.id.container, WorkWithContentProviderFragment.newInstance())
+                    .addToBackStack("").commit()
+            }
+
+            R.id.action_menu_google_maps -> {
+                supportFragmentManager.beginTransaction()
+                    .add(R.id.container, MapsFragment())
                     .addToBackStack("").commit()
             }
         }
