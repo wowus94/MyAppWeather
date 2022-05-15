@@ -58,12 +58,12 @@ class WorkWithContentProviderFragment : Fragment() {
 
     private fun explain() {
         AlertDialog.Builder(requireContext())
-            .setTitle(getString(R.string.access_contacts))
-            .setMessage(getString(R.string.text_message))
-            .setPositiveButton(getString(R.string.provide_access)) { _, _ ->
+            .setTitle(resources.getString(R.string.access_contacts))
+            .setMessage(resources.getString(R.string.text_message))
+            .setPositiveButton(resources.getString(R.string.provide_access)) { _, _ ->
                 mRequestPermission()
             }
-            .setNegativeButton(getString(R.string.no_need)) { dialog, _ -> dialog.dismiss() }
+            .setNegativeButton(resources.getString(R.string.no_need)) { dialog, _ -> dialog.dismiss() }
             .create()
             .show()
     }
