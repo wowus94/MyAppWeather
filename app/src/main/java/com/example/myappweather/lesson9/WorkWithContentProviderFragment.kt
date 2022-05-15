@@ -86,6 +86,7 @@ class WorkWithContentProviderFragment : Fragment() {
                     explain()
                 }
             }
+
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         }
