@@ -34,4 +34,8 @@
     <string name="google_maps">google_maps</string>
     <string name="hint_text">Введите адрес</string>
     <string name="button_search_map">Поиск на карте</string>
+    <string name="notification_title_low">Привет!</string>
+    <string name="notification_title_high">Здравствуйте!</string>
+    <string name="notification_low_text">Как дела?</string>
+    <string name="notification_high_text">Есть разговор!</string>
 </resources>

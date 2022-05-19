@@ -98,22 +98,26 @@ class MapsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
+        initView()
+    }
 
+    private fun initView() {
         binding.buttonSearch.setOnClickListener {
             val searchText = binding.searchAddress.text.toString()
             searchText.isBlank()
             searchText.isEmpty()
             val geocoder = Geocoder(requireContext(), Locale.getDefault())
             val results = geocoder.getFromLocationName(searchText, 1)
+
+
             //TODO HW проверка results
             val location = LatLng(
                 results[0].latitude,
                 results[0].longitude
             )
             map.addMarker(
-                MarkerOptions().position(
-                    location
-                    )
+                MarkerOptions()
+                    .position(location)
                     .title(searchText)
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_marker))
 
